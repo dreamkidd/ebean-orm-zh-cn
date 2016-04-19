@@ -1,6 +1,7 @@
 # Summary
 
 * [Setup](setup.md)
+    * [Enhancement](setup/enhancement.md)
 * [Mapping](mapping.md)
 * [Query](query.md)
 * [Persist](persist.md)

@@ -1,3 +1,6 @@
-# My Awesome Book
+# Ebean-ORM
 
-This file file serves as your book's preface, a great place to describe your book's content and ideas.
+ 
+一下内容翻译自 [Ebean-orm](http://ebean-orm.github.io/) ，由于 Ebean 的相关中文文档太少，故翻译出来一遍大家使用，由于精力有限，可能不能及时更新，力求不太监，尽量做好翻译内容。
+
+**PS** 由于英语水平不高，翻译内容难免出错，希望大家可以谅解

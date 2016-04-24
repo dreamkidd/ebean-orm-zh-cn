@@ -1,4 +1,4 @@
-**映射**的主要目的是将程序代码与数据库模型隔离开来。
+**映射** 的主要目的是将程序代码与数据库模型隔离开来。
 
 这意味着即使数据库出现了一些改变，也不需要改变程序代码。写代码的时候也不需要参考特定的表名，视图名，及列名，这意味着程序可以接受一些不可预见的改变。
 
@@ -214,18 +214,18 @@ Ebean.save(user);
 **注意**如果一个角色被从列表中删除，这将导致一个相应的从中间表中删除。
 
 ## ID 生成
-* DB 标识/自增长
-* DB 序列
-* UUID
-* 自定义 ID 生成
-有4种方法可以为实体自动生成 ID。这种情况会在插入一个实体并且该实体ID 没有值的时候发生。
-强烈建议使用前3种方式，有以下两个原因：
-1. 他们是标准方法，也就是说，如果你选择一个自定义ID生成那么这可以使它更难以用其他程序/工具插入到数据库。
-2. 它们支持并发好 - 你真的可以做的更好？大多数数据库支持序列或标识/自动增量。 DB2和H2支持。
+- DB 标识/自增长
+- DB 序列
+- UUID
+- 自定义 ID 生成
+- 有4种方法可以为实体自动生成 ID。这种情况会在插入一个实体并且该实体ID 没有值的时候发生。
+- 强烈建议使用前3种方式，有以下两个原因：
+- 他们是标准方法，也就是说，如果你选择一个自定义ID生成那么这可以使它更难以用其他程序/工具插入到数据库。
+- 它们支持并发好 - 你真的可以做的更好？大多数数据库支持序列或标识/自动增量。 DB2和H2支持。
 
 ### UUID 生成
-要使用 UUID 与 Ebean 所有你需要做的是使用你的ID属性的UUID类型。
-Ebean会自动分配一个合适的UUID ID生成。
+要使用 UUID 与 Ebean 所有你需要做的是使用你的ID属性的UUID类型。 Ebean会自动分配一个合适的UUID ID生成。
+
 ```
 @Entity
 public class MyEntity {
@@ -235,7 +235,10 @@ UUID id;
 ```
 
 ### DB 序列/DB 自增长
-参考：`com.avaje.ebean.config.dbplatform.DatabasePlatform`和`com.avaje.ebean.config.dbplatform.DbIdentity`
+参考：`com.avaje.ebean.config.dbplatform.DatabasePlatform`和`com.avaje.ebean.config.dbplatform.DbIdentity` 对于
+
+对于不同的数据库(Oracle,Mysql,H2,Postgres等)，都有特别的数据库平台去定义该数据库是否支持序列或自动增量，在定义的时候是否使用 DB 序列或 DB 标志/自增长。 同样还提供了特定于该数据库中的序列发生器。
+
 ```
 @Entity
 public class MyEntity {

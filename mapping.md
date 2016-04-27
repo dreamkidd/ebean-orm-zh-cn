@@ -239,10 +239,119 @@ UUID id;
 
 对于不同的数据库(Oracle,Mysql,H2,Postgres等)，都有特别的数据库平台去定义该数据库是否支持序列或自动增量，在定义的时候是否使用 DB 序列或 DB 标志/自增长。 同样还提供了特定于该数据库中的序列发生器。
 
+对于数据库序列命名惯例，定义序列使用默认名称。除非序列名通过注解明确定义，否则将会使用默认名称。
+
+这意味着，通常你只需要使用`@Id`注解除非你需要重写一个序列名（当它与默认名称不一样时）。
+
 ```
 @Entity
 public class MyEntity {
 @Id
 Integer id;
 ...
+```
+
+### DB 序列批量读取
+处于性能的考虑，我们不希望在我们每次获取一个 ID 的时候就读取一次序列。我们通过一个批处理取得序列（参考 `ServerConfig` 的 `setDatebaseSequenceBathSize`）,默认的大小是20。
+
+需要注意的是，当可用的标识对一个给定的顺序数降为批处理一半的大小时，序列的下一批通过一个后台线程获取。
+
+对于 Oracle，Postgres 和 H2 我们使用 Db 序列。值得注意的是，这允许使用 JDBC 批处理语句(`PerparedStatement.addBatch()`等)，这是一个显著的性能优化。 你可以通过 `ServerConfig.setUsePersistBatching()`来全局开启 JDBC 批处理，或者你可以将它放在一个特定的事务中。
+
+## `@Formula`
+`@Formula`可以用来获取只读的 SQL 字面量，SQL 表达式和 SQL 函数值。
+
+通过 `$\{ta}`这个特殊的表达式来表示该表的别名。通过 Ebean 可以动态的确定表的别名，你可以把 `$\{ta}`放在 select 或者 join 属性中。
+
+### SQL 表达式
+示例：caseForm 字段使用 SQL 表达式
+
+```
+...
+@Entity
+@Table(name="s_user")
+public class User {
+  @Id
+  Integer id;
+
+  @Formula(select="(case when $\{ta}.id > 4 then 'T' else 'F' end)")
+  boolean caseForm;
+  ...
+```
+
+**注意** `$\{ta}`处在表别名的位置 **注意** 在此环境下'T'和'F'被映射为布尔值
+
+### SQL 函数
+
+```
+@Formula(select="(select count(*) from f_topic _b where _b.user_id =$\{ta}.id)")
+int countAssiged;
+```
+
+该表达式属性可以视为正常属性，这包括了在查询时选择何种表达式。
+
+```
+// include the countAssigned property
+Query<User> query = Ebean.createQuery(User.class);
+query.select("id, name, countAssiged");
+query.fetch("topics");
+List<User> list = query.findList();
+```
+
+上面的代码生成如下 SQL
+
+```
+<sql summary='[app.data.User]'>
+select u.id, u.name,
+(select count(*) from f_topic _b where _b.user_id = u.id)
+from s_user u
+</sql>
+```
+
+注意 u 替代了 Formula 中的 select 属性中 sql 里的 $\{ta}[表别名占位符]。
+
+**还需要注意的是，不能执行太大的 SQL！！！**
+
+# 枚举映射
+这是一个 Ebean 特定的注解（非 JPA 注解）可以将枚举值映射到数据库值。因为通过 JPA 注解映射枚举值是十分危险的（序列映射）或者十分不实用（字符串映射）。
+我们举一个枚举的例子：
+
+```
+public enum UserStatus {
+  ACTIVE, INACTIVE, NEW
+}
+```
+### 枚举序列映射的危险
+在我看来，JPA 序列映射枚举是十分危险的，并且建议避免它。原因是因为枚举序列的值取决于它们出现的顺序。
+
+```java
+public class TestStatus {
+  public static void main(String[] args) {
+      int ord0 = UserStatus.ACTIVE.ordinal();
+      int ord1 = UserStatus.INACTIVE.ordinal();
+      int ord2 = UserStatus.NEW.ordinal();
+
+      // 0, 1, 2
+      System.out.println("ord 0:"+ord0+" 1:"+ord1+" 2:"+ord2);
+
+      String str0 = UserStatus.ACTIVE.name();
+      String str1 = UserStatus.INACTIVE.name();
+      String str2 = UserStatus.NEW.name();
+
+      // "ACTIVE", "INACTIVE", "NEW"
+      System.out.println("str 0:"+str0+" 1:"+str1+" 2:"+str2);
+  }
+}
+```
+输出：
+```
+ord 0:0 1:1 2:2
+str 0:ACTIVE 1:INACTIVE 2:NEW
+```
+
+如果你像在这个例子中，改变了枚举元素的顺序（删除在序列中的值为0）
+```
+public enum UserStatus {
+  DELETED, ACTIVE, INACTIVE, NEW
+}
 ```

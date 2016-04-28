@@ -355,3 +355,22 @@ public enum UserStatus {
   DELETED, ACTIVE, INACTIVE, NEW
 }
 ```
+如上边的代码所示，ACTIVE,INACTIVE,NEW 的序列值都已经改变。这是一个很微小的变化，但是现在数据库中的值与程序中每个状态所代表的值无法对应。希望这个 issue 可以尽快被发现，但是当发现这个 issue 时，可能已经造成了很严重的后果。
+
+### 枚举 String 的不足
+可能你的 DBA 为了节省空间，希望将 ACTIVE,INACTIVE,NEW,DELETED 映射为 varchar(1)的'A','I','N','D'代码。
+字符串的映射问题是没有那么多的命名空间去将值映射为单一的字符。
+
+### @EnumValue
+```
+public enum UserStatus {
+  @EnumValue("D") DELETED,
+  @EnumValue("A") ACTIVE,
+  @EnumValue("I") INACTIVE,
+  @EnumValue("N") NEW
+}
+```
+
+通过EnumValue（Ebean具体注释）明确指定值映射条目。这个注解已记录在EclipseLink项目，有希望进入JPA规范。
+
+# 加密

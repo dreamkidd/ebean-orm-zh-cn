@@ -1,7 +1,8 @@
 # Summary
 - [Setup](setup.md)
   - [增强](setup/enhancement.md)
-
+  - [日志](setup/logging.md)
+  - [服务配置](setup/serverconfig.md)
 - [Mapping](mapping.md)
   - [概览](overview.md)
   - [命名约定](namingconvention.md)
@@ -9,7 +10,8 @@
   - [列表](list.md)
 - [Query](query.md)
   - [概览](query/overview.md)
-
+  - [JPA](query/JPA.md)
+  - [命名惯例](query/namingconvention.md)
 - [Persist](persist.md)
 - [Transactions](transactions.md)
 - [Features](features.md)

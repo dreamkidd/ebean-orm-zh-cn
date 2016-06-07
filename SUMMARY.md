@@ -3,6 +3,8 @@
   - [增强](setup/enhancement.md)
   - [日志](setup/logging.md)
   - [服务配置](setup/serverconfig.md)
+  - [Guice](setup/guice.md)
+  - [Spring](setup/spring.md)
 - [Mapping](mapping.md)
   - [概览](mapping/overview.md)
   - [命名约定](mapping/namingconvention.md)

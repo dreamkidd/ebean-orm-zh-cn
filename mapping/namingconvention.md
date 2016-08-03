@@ -20,4 +20,4 @@ public class Contact extends BaseModel {
 
 也可以使用`MatchingNamingConvention`或者自己实现命名惯例。
 
-`matchingnamingconvention`命名列名称匹配的属性名和表名匹配实体名称。ebean遵循JPA规范指出，在没有注释的类的名称将作为表名和属性名的情况将作为该列的名称。
+`matchingnamingconvention`命名列名称匹配的属性名和表名匹配实体名称。ebean遵循JPA规范，在没有注释的类的名称将作为表名和属性名的情况将作为该列的名称。

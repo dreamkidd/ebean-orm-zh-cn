@@ -1,4 +1,8 @@
 # 增强
+
+## 建议
+对于 IDEA 及 Eclipse 用户建议使用 IDE 插件来增强，在构建过程中，使用 maven 插件或者代理来执行增强。 也就是说,IDE 插件适用于在 IDE 编译 classes 时增强 beans。在开发，单元测试过程中可以减少一些麻烦。 对于生成环境，则可以选择使用 maven 插件在构建时增强，或者使用 javaagent 在运行时增强。
+
 ## 概览
 术语"Enhancement"涵盖了用于修改实体 Bean 的所有方法（javaagent,ant,maven,ide 插件等）。 类似"Weaving","Transformation"以及"byte code manipulation"等术语用于描述增强。
 
@@ -9,8 +13,6 @@
 ## 使用多个增强
 Ebean Enchancement 知道增强是何时发生的。一般情况下，是使用多种形式的增强，如 IDE，Maven 插件等来同时执行增强。
 
-## 建议
-对于 IDEA 及 Eclipse 用户建议使用 IDE 插件来增强，在构建过程中，使用 maven 插件或者代理来执行增强。 也就是说,IDE 插件适用于在 IDE 编译 classes 时增强 beans。在开发，单元测试过程中可以减少一些麻烦。 对于生成环境，则可以选择使用 maven 插件在构建时增强，或者使用 javaagent 在运行时增强。
 
 ## IDEA 插件
 安装 IDEA 插件介绍 [YOUTOBE](https://youtu.be/o4kmglM48Vc)

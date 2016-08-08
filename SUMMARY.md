@@ -17,6 +17,7 @@
   - [JPA](mapping/JPA.md)
 
     - [`@Id`](mapping/jpa/id.md)
+    - [`@OneToMany`](mapping/jpa/onetomany.md)
 
 - [Query](query.md)
 

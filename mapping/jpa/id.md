@@ -1,12 +1,10 @@
-# JPA 映射
+# `@Id`
 
-## `@Id`
-
-### Enhancement
+## Enhancement
 
 增强方面`@Id`属性会被区别对待，它们从来不会调用延迟加载。
 
-### 生成值
+## 生成值
 
 当对一个数字类型或者`UUID`类型的属性加入`@Id`注解，Ebean会自动分配一个`Id generator`属性。 意味着Ebean会冗余的添加`@GeneratedValue`注解
 
@@ -20,11 +18,11 @@ Long id;
 Long id;
 ```
 
-### UUID
+## UUID
 
 如果`@Id`类型为`UUID`，则Ebean会自动分配一个合适的ID生成到该属性。
 
-### 数据库平台
+## 数据库平台
 
 所有支持`Identity`或`Sequence`(或同时支持)的数据库,Ebean都会基于数据库选择合适的Id生成策略
 
@@ -39,7 +37,7 @@ SQL Server  | Identity
 SQLite      | Identity
 SqlAnywhere | Identity
 
-### 自定义ID生成
+## 自定义ID生成
 
 Ebean支持注册和使用自定义ID
 

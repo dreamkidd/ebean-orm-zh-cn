@@ -18,6 +18,11 @@
 
     - [`@Id`](mapping/jpa/id.md)
     - [`@OneToMany`](mapping/jpa/onetomany.md)
+    - [`@ManyToOne`](mapping/jpa/manytoone.md)
+
+  - [扩展](mapping/extension.md)
+
+    - [`@DbEnumValue`](mapping/extension/enumvalue.md)
 
 - [Query](query.md)
 
